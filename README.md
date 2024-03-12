@@ -28,7 +28,7 @@ We used all course's theory in order to develop our search engine:
    Also, PageRank and page view amount for each document were normalized and combined into a ranking function with five components: title, body, anchor, PageRank and page view. When combining the 
    scores, each component was multiplied by its weight. Those weights were adjusted to get optimal ranking results.
       
-6. # Evaluation
+6. # Evaluation (test_app.ipynb)
    The course staff provided us with labled benchmark (queries_train.json) as train dataset for tesing and evaluation. The evaluation metrics that were used:
    Precision@5: Number of relevant documents for a given query that were retrieved, divided by the total number of retrived documents. In our case we looked at first 5 documents retrieved.
    F1@30: Harmonic mean of the precision and recall metrics. In our case we calculated the precision and recall of first 30 documents retrieved.
