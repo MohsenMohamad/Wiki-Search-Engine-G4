@@ -314,14 +314,17 @@ def calc_BM25_score(query_to_search, index, bin_dir_name, top_k=500, k1=1.2, b=0
     if token in index.df:
       # calculate idf for specific token as needed for OKAPI BM25 formula
       token_idf = math.log(1 + (len(index.dl) - index.df[token] + 0.5) / (index.df[token] + 0.5))
-      pls = index.read_a_posting_list(bin_dir_name, token, bucket_name)
-      # taking only k_length documents with highest tf
-      pls = pls[:k_length]
-      for doc_id, freq in pls:
-        numerator = token_idf * freq * (k1 + 1)
-        denominator = freq + k1 * (1 - b + (b * index.dl[doc_id]) / index.avg_dl)
-        if (denominator != 0):
-          doc_BM25_scores[doc_id] += (numerator / denominator)
+      try:
+        pls = index.read_a_posting_list(bin_dir_name, token, bucket_name)
+        # taking only k_length documents with highest tf
+        pls = pls[:k_length]
+        for doc_id, freq in pls:
+          numerator = token_idf * freq * (k1 + 1)
+          denominator = freq + k1 * (1 - b + (b * index.dl[doc_id]) / index.avg_dl)
+          if (denominator != 0):
+            doc_BM25_scores[doc_id] += (numerator / denominator)
+      except:
+        continue 
   return [(doc_id, score) for doc_id, score in doc_BM25_scores.most_common()[:top_k]]
 
 
